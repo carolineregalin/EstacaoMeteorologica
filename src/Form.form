@@ -4,9 +4,12 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[400, 500]"/>
+      <Dimension value="[500, 500]"/>
     </Property>
     <Property name="name" type="java.lang.String" value="Formul&#xe1;rio - Esta&#xe7;&#xe3;o Meteorol&#xf3;gica" noResource="true"/>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[500, 500]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -87,6 +90,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Selecionar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelecionarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblArquivo">
       <Properties>

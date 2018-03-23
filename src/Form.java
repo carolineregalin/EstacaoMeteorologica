@@ -1,3 +1,6 @@
+
+import java.nio.file.*;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -37,12 +40,18 @@ public class Form extends javax.swing.JFrame {
         btnExportar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(400, 500));
+        setMinimumSize(new java.awt.Dimension(500, 500));
         setName("Formulário - Estação Meteorológica"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(500, 500));
 
         txtCaminhoArquivo.setEnabled(false);
 
         btnSelecionar.setText("Selecionar");
+        btnSelecionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelecionarActionPerformed(evt);
+            }
+        });
 
         lblArquivo.setText("Arquivo:");
 
@@ -110,8 +119,20 @@ public class Form extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnExportarActionPerformed
+
+    private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
+        AbrirArquivo of = new AbrirArquivo();
+        try {
+            Path caminho = of.SelecionarArquivo();
+            
+            txtCaminhoArquivo.setText(caminho.toString());
+        }
+        catch (Exception e){
+             txtCaminhoArquivo.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_btnSelecionarActionPerformed
 
     /**
      * @param args the command line arguments
