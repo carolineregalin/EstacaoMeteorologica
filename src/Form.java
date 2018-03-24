@@ -24,7 +24,6 @@ public class Form extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(500, 500));
         setName("Formulário - Estação Meteorológica"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(500, 500));
 
         txtCaminhoArquivo.setEnabled(false);
 
@@ -38,14 +37,21 @@ public class Form extends javax.swing.JFrame {
         lblArquivo.setText("Arquivo:");
 
         lblMes.setText("Mês:");
+        lblMes.setEnabled(false);
+        lblMes.setFocusCycleRoot(true);
 
-        cmbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbMes.setEnabled(false);
+        cmbMes.setFocusCycleRoot(true);
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.setEnabled(false);
+        jTextArea1.setFocusCycleRoot(true);
         jScrollPane1.setViewportView(jTextArea1);
 
         btnExportar.setText("Exportar");
+        btnExportar.setEnabled(false);
+        btnExportar.setFocusCycleRoot(true);
         btnExportar.setMaximumSize(new java.awt.Dimension(105, 23));
         btnExportar.setMinimumSize(new java.awt.Dimension(105, 23));
         btnExportar.addActionListener(new java.awt.event.ActionListener() {
@@ -105,11 +111,19 @@ public class Form extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExportarActionPerformed
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
+        lblMes.setEnabled(false);
+        cmbMes.setEnabled(false);
+        btnExportar.setEnabled(false);
+        
         AbrirArquivo of = new AbrirArquivo();
+        
         try {
             Path caminho = of.SelecionarArquivo();
             
             txtCaminhoArquivo.setText(caminho.toString());
+            lblMes.setEnabled(true);
+            cmbMes.setEnabled(true);
+            btnExportar.setEnabled(true);
         }
         catch (Exception e){
              txtCaminhoArquivo.setText(e.getMessage());
