@@ -1,3 +1,10 @@
+/* 
+ *
+ * - Alan Felipe Jantz 
+ * - Caroline Belli Regalin
+ * - Matheus Mahnke
+ *
+*/
 
 import java.io.File; 
 import java.nio.file.*;
