@@ -6,7 +6,9 @@
  *
 */
 
+import java.io.*;
 import java.nio.file.*;
+import javax.swing.JOptionPane;
 
 public class Form extends javax.swing.JFrame {
 
@@ -23,9 +25,9 @@ public class Form extends javax.swing.JFrame {
         lblArquivo = new javax.swing.JLabel();
         lblMes = new javax.swing.JLabel();
         cmbMes = new javax.swing.JComboBox<>();
-        jSeparator1 = new javax.swing.JSeparator();
+        separador = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtRelatorio = new javax.swing.JTextArea();
         btnExportar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,11 +55,11 @@ public class Form extends javax.swing.JFrame {
         cmbMes.setEnabled(false);
         cmbMes.setFocusCycleRoot(true);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setEnabled(false);
-        jTextArea1.setFocusCycleRoot(true);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtRelatorio.setColumns(20);
+        txtRelatorio.setRows(5);
+        txtRelatorio.setEnabled(false);
+        txtRelatorio.setFocusCycleRoot(true);
+        jScrollPane1.setViewportView(txtRelatorio);
 
         btnExportar.setText("Exportar");
         btnExportar.setEnabled(false);
@@ -90,7 +92,7 @@ public class Form extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jSeparator1))
+                    .addComponent(separador))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -102,7 +104,7 @@ public class Form extends javax.swing.JFrame {
                     .addComponent(btnSelecionar)
                     .addComponent(lblArquivo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(separador, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMes)
@@ -117,26 +119,34 @@ public class Form extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-        
+        try {
+            // Pega o caminho da pasta selecionada pelo usuário
+            Path caminho = new FilePathManipulator().SelecionarDiretorio();
+            // Cria um novo arquivo de texto no diretório informado pelo usuário
+            FileWriter arqRelatorio = new FileWriter(caminho.toString() + "\\Relatorio.txt");
+            // Pega o texto da área de texto do relatório e escreve no arquivo de texto
+            arqRelatorio.write(txtRelatorio.getText());
+            // Fecha o arquivo
+            arqRelatorio.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um problema ao exportar relatório: \r\n" + ex.getMessage());
+        }
     }//GEN-LAST:event_btnExportarActionPerformed
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
-        lblMes.setEnabled(false);
-        cmbMes.setEnabled(false);
-        btnExportar.setEnabled(false);
-        
-        AbrirArquivo of = new AbrirArquivo();
-        
+        // Desabilita os botões e campos do formulário
+        setFields(false);
         try {
-            Path caminho = of.SelecionarArquivo();
-            
+            // Pega o caminho do arquivo selecionado pelo usuário
+            Path caminho = new FilePathManipulator().SelecionarArquivo();
+            // Mostra o caminho no campo de texto
             txtCaminhoArquivo.setText(caminho.toString());
-            lblMes.setEnabled(true);
-            cmbMes.setEnabled(true);
-            btnExportar.setEnabled(true);
+            // Habilita os botões e campos do formulário
+            setFields(true);
         }
         catch (Exception e){
-             txtCaminhoArquivo.setText(e.getMessage());
+            // Caso haja exceção, mostra mensagem ao usuário
+            txtCaminhoArquivo.setText(e.getMessage());
         }
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
@@ -171,16 +181,22 @@ public class Form extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void setFields(boolean value) {
+        lblMes.setEnabled(value);
+        cmbMes.setEnabled(value);
+        btnExportar.setEnabled(value);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnSelecionar;
     private javax.swing.JComboBox<String> cmbMes;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblArquivo;
     private javax.swing.JLabel lblMes;
+    private javax.swing.JSeparator separador;
     private javax.swing.JTextField txtCaminhoArquivo;
+    private javax.swing.JTextArea txtRelatorio;
     // End of variables declaration//GEN-END:variables
 }
