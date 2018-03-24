@@ -10,50 +10,62 @@ import java.util.Date;
 
 public class ClimaDoDia {
 
-    // Propriedades
+    // Atributos
     private Date data;
-    private String ventDirecao;
+    private String ventoDirecao;
     private int ventoVelocidade;
-    private int indicePluviomtrico;
+    private int indicePluviometrico;
     private double temperatura;
     
+    // Data
     public Date getData() {
-        return data;
+        return this.data;
+    }
+    public void setData(Date value) {
+        if (value == null) {
+            throw new IllegalArgumentException("Data não pode ser nula!");
+        }
+        this.data = value;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    // Direção do Vento
+    public String getVentoDirecao() {
+        return ventoDirecao;
+    }
+    public void setVentoDirecao(String value) {
+        if (value == null || value.trim().length() < 1) {
+            throw new IllegalArgumentException("Direção do vento não pode ser nulo!");
+        }
+        this.ventoDirecao = value;
     }
 
-    public String getVentDirecao() {
-        return ventDirecao;
-    }
-
-    public void setVentDirecao(String ventDirecao) {
-        this.ventDirecao = ventDirecao;
-    }
-
+    // Velocidade do Vento
     public int getVentoVelocidade() {
         return ventoVelocidade;
     }
-
-    public void setVentoVelocidade(int ventoVelocidade) {
-        this.ventoVelocidade = ventoVelocidade;
+    public void setVentoVelocidade(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("Velocidade não pode ser negativa!");
+        }
+        this.ventoVelocidade = value;
     }
 
-    public int getIndicePluviomtrico() {
-        return indicePluviomtrico;
+    // Índice Pluviométrico
+    public int getIndicePluviometrico() {
+        return indicePluviometrico;
+    }
+    public void setIndicePluviometrico(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("Índice pluviométrico não pode ser negativo!");
+        }
+        this.indicePluviometrico = value;
     }
 
-    public void setIndicePluviomtrico(int indicePluviomtrico) {
-        this.indicePluviomtrico = indicePluviomtrico;
-    }
-
+    // Temperatura
     public double getTemperatura() {
         return temperatura;
     }
-
-    public void setTemperatura(double temperatura) {
-        this.temperatura = temperatura;
+    public void setTemperatura(double value) {
+        this.temperatura = value;
     }
 }
