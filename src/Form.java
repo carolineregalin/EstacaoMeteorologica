@@ -1,3 +1,10 @@
+/* 
+ *
+ * - Alan Felipe Jantz 
+ * - Caroline Belli Regalin
+ * - Matheus Mahnke
+ *
+*/
 
 import java.nio.file.*;
 
@@ -22,8 +29,11 @@ public class Form extends javax.swing.JFrame {
         btnExportar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Estação Meteorológica");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setLocation(new java.awt.Point(100, 100));
         setMinimumSize(new java.awt.Dimension(500, 500));
-        setName("Formulário - Estação Meteorológica"); // NOI18N
+        setName(""); // NOI18N
 
         txtCaminhoArquivo.setEnabled(false);
 
