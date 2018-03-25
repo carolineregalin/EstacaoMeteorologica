@@ -6,7 +6,8 @@
  *
 */
 
-import java.util.Date;
+import java.text.*;
+import java.util.*;
 
 public class ClimaDoDia {
 
@@ -26,6 +27,15 @@ public class ClimaDoDia {
             throw new IllegalArgumentException("Data não pode ser nula!");
         }
         this.data = value;
+    }
+    public String getDia(){
+        return new SimpleDateFormat("dd").format(data);
+    }
+    public String getMes(){
+        return new SimpleDateFormat("MM").format(data);
+    } 
+    public String getAno(){
+        return new SimpleDateFormat("yyyy").format(data);
     }
 
     // Direção do Vento

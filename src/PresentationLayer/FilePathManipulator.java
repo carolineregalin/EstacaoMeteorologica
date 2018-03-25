@@ -9,6 +9,8 @@
 import java.io.File; 
 import java.nio.file.*;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FilePathManipulator {
     
@@ -19,6 +21,10 @@ public class FilePathManipulator {
     public Path SelecionarArquivo() throws Exception {
         Path caminho = null;
         chooser.setDialogTitle("Selecionar arquivo");
+        // Cria um filtro para apenas pesquisar arquivos binários
+        FileFilter filtro = new FileNameExtensionFilter("Binário", "dat");
+        // Seta o filtro do File Chooser
+        chooser.setFileFilter(filtro);
         // Se a pessoa selecionou um arquivo
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             // Pega o arquivo selecionado no File Chooser
