@@ -6,10 +6,11 @@
  *
 */
 
+import java.io.Serializable;
 import java.text.*;
 import java.util.*;
 
-public class ClimaDoDia {
+public class ClimaDoDia implements Serializable{
 
     // Atributos
     private Date data;
