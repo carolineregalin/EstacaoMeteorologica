@@ -12,11 +12,14 @@ import java.text.*;
 import java.util.*;
 
 public class MesInfo {
-
+    
     // Método responsável por gerar o relatório mensal
     public String gerarRelatorioMes(Path path) throws Exception {
-        // ArrayList com todos os dias salvos daquele mês
-        ArrayList<ClimaDoDia> mes = carregarMes(path);
+        return concatenarRelatorioMes(carregarMes(path));
+    }
+    
+    // Método responsável por gerar o relatório mensal
+    private String concatenarRelatorioMes(ArrayList<ClimaDoDia> mes) throws Exception {
         return "Mês:" + getMesArquivo(mes) + " \n"
              + "Quantidade de dias considerados: " + getQuantidadeDiasMes(mes) + " \n"
              + "Acumulado de chuva: " + getAcumuladoChuva(mes) + " \n"
@@ -30,6 +33,9 @@ public class MesInfo {
 
     // Método que busca o arquivo contendo o mês
     private ArrayList<ClimaDoDia> carregarMes(Path path) throws Exception {
+        if (path == null) {
+            throw new IllegalArgumentException("Caminho do arquivo não pode ser nulo!");
+        }
         ArrayList<ClimaDoDia> mes;
         try {
             ObjectInputStream file = new ObjectInputStream(new FileInputStream(path.toFile()));
