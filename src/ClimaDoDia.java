@@ -18,15 +18,21 @@ public class ClimaDoDia {
     private int indicePluviometrico;
     private double temperatura;
     
+    // Construtor
+    public ClimaDoDia(Date data, String direcao, int velocidade, int indice, double temperatura) {
+        this.setData(data);
+        this.setVentoDirecao(direcao);
+        this.setVentoVelocidade(velocidade);
+        this.setIndicePluviometrico(indice);
+        this.setTemperatura(temperatura);
+    }
+    public ClimaDoDia() {
+        // Construtor vazio
+    }
+    
     // Data
     public Date getData() {
         return this.data;
-    }
-    public void setData(Date value) {
-        if (value == null) {
-            throw new IllegalArgumentException("Data não pode ser nula!");
-        }
-        this.data = value;
     }
     public String getDia(){
         return new SimpleDateFormat("dd").format(data);
@@ -36,6 +42,12 @@ public class ClimaDoDia {
     } 
     public String getAno(){
         return new SimpleDateFormat("yyyy").format(data);
+    }
+    public void setData(Date value) {
+        if (value == null) {
+            throw new IllegalArgumentException("Data não pode ser nula!");
+        }
+        this.data = value;
     }
 
     // Direção do Vento

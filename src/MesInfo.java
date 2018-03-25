@@ -19,7 +19,10 @@ public class MesInfo {
     }
     
     // Método responsável por gerar o relatório mensal
-    private String concatenarRelatorioMes(ArrayList<ClimaDoDia> mes) throws Exception {
+    public String concatenarRelatorioMes(ArrayList<ClimaDoDia> mes) throws IllegalArgumentException {
+        if (mes == null) {
+            throw new IllegalArgumentException("Arquivo não pode ser nulo!");
+        }
         return "Mês:" + getMesArquivo(mes) + " \n"
              + "Quantidade de dias considerados: " + getQuantidadeDiasMes(mes) + " \n"
              + "Acumulado de chuva: " + getAcumuladoChuva(mes) + " \n"
@@ -32,7 +35,7 @@ public class MesInfo {
     }
 
     // Método que busca o arquivo contendo o mês
-    private ArrayList<ClimaDoDia> carregarMes(Path path) throws Exception {
+    public ArrayList<ClimaDoDia> carregarMes(Path path) throws Exception {
         if (path == null) {
             throw new IllegalArgumentException("Caminho do arquivo não pode ser nulo!");
         }
@@ -49,12 +52,12 @@ public class MesInfo {
     }
 
     // Método que retorna a quantidade de dias registrados daquele mês
-    private int getQuantidadeDiasMes(ArrayList<ClimaDoDia> mes) {
+    public int getQuantidadeDiasMes(ArrayList<ClimaDoDia> mes) {
         return mes.size();
     }
 
     // Método que retorna o acumulado de chuva
-    private String getAcumuladoChuva(ArrayList<ClimaDoDia> mes) {
+    public String getAcumuladoChuva(ArrayList<ClimaDoDia> mes) {
         int acumulado = 0;
         // Percorre todos os dias daquele mês
         for (ClimaDoDia dia : mes) {
@@ -65,7 +68,7 @@ public class MesInfo {
     }
 
     // Método que retorna a velocidade média do vento daquele mês
-    private String getVelocidadeMediaVento(ArrayList<ClimaDoDia> mes) {
+    public String getVelocidadeMediaVento(ArrayList<ClimaDoDia> mes) {
         double cont = 0;
         // Percorre todos os dias daquela mês
         for (ClimaDoDia dia : mes) {
@@ -76,7 +79,7 @@ public class MesInfo {
     }
 
     // Método que retorna o dia com maior velocidade de vento
-    private String getMaiorVelocidadeVento(ArrayList<ClimaDoDia> mes) {
+    public String getMaiorVelocidadeVento(ArrayList<ClimaDoDia> mes) {
         // Objeto para armarezar o dia com maior velocidade de vento
         ClimaDoDia maior = new ClimaDoDia();
         // Velocidade inicial começa com o valor mínimo de um inteiro
@@ -93,7 +96,7 @@ public class MesInfo {
     }
 
     // Método que retorna o dia com menor velocidade de vento
-    private String getMenorVelocidadeVento(ArrayList<ClimaDoDia> mes) {
+    public String getMenorVelocidadeVento(ArrayList<ClimaDoDia> mes) {
         // Objeto para armarezar o dia com menor velocidade de vento
         ClimaDoDia menor = new ClimaDoDia();
         // Velocidade inicial começa com o valor máximo de um inteiro
@@ -110,18 +113,18 @@ public class MesInfo {
     }
 
     // Método que retorna a temperatura média daquele mês
-    private String getTemperaturaMedia(ArrayList<ClimaDoDia> mes) {
+    public String getTemperaturaMedia(ArrayList<ClimaDoDia> mes) {
         double acumulado = 0;
         // Percorre todos os dias daquela mês
         for (ClimaDoDia dia : mes) {
             // Soma a temperatura de cada um
             acumulado += dia.getTemperatura();
         }
-        return (acumulado / getQuantidadeDiasMes(mes)) + " km/h";
+        return (acumulado / getQuantidadeDiasMes(mes)) + " ºC";
     }
 
     // Método que retorna o dia com maior temperatura
-    private String getMaiorTemperatura(ArrayList<ClimaDoDia> mes) {
+    public String getMaiorTemperatura(ArrayList<ClimaDoDia> mes) {
         // Objeto para armarezar o dia com maior temperatura
         ClimaDoDia maior = new ClimaDoDia();
         // Temperatura inicial começa com o valor mínimo de um inteiro
@@ -134,11 +137,11 @@ public class MesInfo {
                 maior = dia;
             }
         }
-        return maior.getTemperatura() + " ⁰C em " + new SimpleDateFormat("dd/MM//yyyy").format(maior.getData());
+        return maior.getTemperatura() + " ºC em " + new SimpleDateFormat("dd/MM//yyyy").format(maior.getData());
     }
     
     // Método que retorna o dia com menor temperatura
-    private String getMenorTemperatura(ArrayList<ClimaDoDia> mes) {
+    public String getMenorTemperatura(ArrayList<ClimaDoDia> mes) {
         // Objeto para armarezar o dia com menor temperatura
         ClimaDoDia menor = new ClimaDoDia();
         // Temperatura inicial começa com o valor máximo de um inteiro
@@ -151,11 +154,11 @@ public class MesInfo {
                 menor = dia;
             }
         }
-        return menor.getTemperatura() + " ⁰C em " + new SimpleDateFormat("dd/MM//yyyy").format(menor.getData());
+        return menor.getTemperatura() + " ºC em " + new SimpleDateFormat("dd/MM//yyyy").format(menor.getData());
     }
     
     // Método que retorna o mês do arquivo
-    private String getMesArquivo(ArrayList<ClimaDoDia> mes) {
+    public String getMesArquivo(ArrayList<ClimaDoDia> mes) {
         // Pega o primeiro dia do mês
         ClimaDoDia dia = mes.get(0);
         // Formatadorr de data
