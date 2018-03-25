@@ -92,7 +92,7 @@ public class MesInfo {
                 maior = dia;
             }
         }
-        return maior.getVentoVelocidade() + " km/h em " + new SimpleDateFormat("dd/MM//yyyy").format(maior.getData()) + " na direção " + maior.getVentoDirecao();
+        return maior.getVentoVelocidade() + " km/h em " + maior.getDataFormatada() + " na direção " + maior.getVentoDirecao();
     }
 
     // Método que retorna o dia com menor velocidade de vento
@@ -109,7 +109,7 @@ public class MesInfo {
                 menor = dia;
             }
         }
-        return menor.getVentoVelocidade() + " km/h em " + new SimpleDateFormat("dd/MM//yyyy").format(menor.getData()) + " na direção " + menor.getVentoDirecao();
+        return menor.getVentoVelocidade() + " km/h em " + menor.getDataFormatada() + " na direção " + menor.getVentoDirecao();
     }
 
     // Método que retorna a temperatura média daquele mês
@@ -137,7 +137,7 @@ public class MesInfo {
                 maior = dia;
             }
         }
-        return maior.getTemperatura() + " ºC em " + new SimpleDateFormat("dd/MM//yyyy").format(maior.getData());
+        return maior.getTemperatura() + " ºC em " + maior.getDataFormatada();
     }
     
     // Método que retorna o dia com menor temperatura
@@ -154,7 +154,7 @@ public class MesInfo {
                 menor = dia;
             }
         }
-        return menor.getTemperatura() + " ºC em " + new SimpleDateFormat("dd/MM//yyyy").format(menor.getData());
+        return menor.getTemperatura() + " ºC em " + menor.getDataFormatada();
     }
     
     // Método que retorna o mês do arquivo

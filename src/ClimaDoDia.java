@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.text.*;
 import java.util.*;
 
-public class ClimaDoDia implements Serializable{
+public class ClimaDoDia implements Serializable {
 
     // Atributos
     private Date data;
@@ -34,6 +34,9 @@ public class ClimaDoDia implements Serializable{
     // Data
     public Date getData() {
         return this.data;
+    }
+    public String getDataFormatada() {
+        return new SimpleDateFormat("dd/MM//yyyy").format(data);
     }
     public String getDia(){
         return new SimpleDateFormat("dd").format(data);
