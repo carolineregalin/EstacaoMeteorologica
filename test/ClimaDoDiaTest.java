@@ -14,6 +14,16 @@ public class ClimaDoDiaTest {
     
     private ClimaDoDia instance = new ClimaDoDia();
     
+    @Test
+    public void testConstructorNoParam() {
+        instance = new ClimaDoDia();
+    }
+    
+    @Test
+    public void testConstructorWithParam() {
+        instance = new ClimaDoDia(new Date(), "SE", 10, 10, 10);
+    }
+    
     /*
     @Test
     public void testGetData() {
