@@ -14,7 +14,7 @@ import java.util.*;
 public class MesInfo {
 
     // Método responsável por gerar o relatório mensal
-    public String gerarRelatorioMes(Path path) {
+    public String gerarRelatorioMes(Path path) throws Exception {
         // ArrayList com todos os dias salvos daquele mês
         ArrayList<ClimaDoDia> mes = carregarMes(path);
         return "Mês:" + getMesArquivo(mes) + " \n"
@@ -29,7 +29,7 @@ public class MesInfo {
     }
 
     // Método que busca o arquivo contendo o mês
-    private ArrayList<ClimaDoDia> carregarMes(Path path) {
+    private ArrayList<ClimaDoDia> carregarMes(Path path) throws Exception {
         ArrayList<ClimaDoDia> mes;
         try {
             ObjectInputStream file = new ObjectInputStream(new FileInputStream(path.toFile()));
@@ -37,7 +37,7 @@ public class MesInfo {
             mes = (ArrayList<ClimaDoDia>) file.readObject();
             file.close();
         } catch (Exception ex) {
-            mes = new ArrayList();
+            throw new Exception("Erro ao abrir arquivo!\r\n" + ex.getMessage());
         }
         return mes;
     }
@@ -67,11 +67,10 @@ public class MesInfo {
             cont += dia.getVentoVelocidade();
         }
         return (cont / getQuantidadeDiasMes(mes)) + " km/h";
-
     }
 
     // Método que retorna o dia com maior velocidade de vento
-    public String getMaiorVelocidadeVento(ArrayList<ClimaDoDia> mes) {
+    private String getMaiorVelocidadeVento(ArrayList<ClimaDoDia> mes) {
         // Objeto para armarezar o dia com maior velocidade de vento
         ClimaDoDia maior = new ClimaDoDia();
         // Velocidade inicial começa com o valor mínimo de um inteiro
@@ -88,7 +87,7 @@ public class MesInfo {
     }
 
     // Método que retorna o dia com menor velocidade de vento
-    public String getMenorVelocidadeVento(ArrayList<ClimaDoDia> mes) {
+    private String getMenorVelocidadeVento(ArrayList<ClimaDoDia> mes) {
         // Objeto para armarezar o dia com menor velocidade de vento
         ClimaDoDia menor = new ClimaDoDia();
         // Velocidade inicial começa com o valor máximo de um inteiro
@@ -105,7 +104,7 @@ public class MesInfo {
     }
 
     // Método que retorna a temperatura média daquele mês
-    public String getTemperaturaMedia(ArrayList<ClimaDoDia> mes) {
+    private String getTemperaturaMedia(ArrayList<ClimaDoDia> mes) {
         double acumulado = 0;
         // Percorre todos os dias daquela mês
         for (ClimaDoDia dia : mes) {
@@ -116,7 +115,7 @@ public class MesInfo {
     }
 
     // Método que retorna o dia com maior temperatura
-    public String getMaiorTemperatura(ArrayList<ClimaDoDia> mes) {
+    private String getMaiorTemperatura(ArrayList<ClimaDoDia> mes) {
         // Objeto para armarezar o dia com maior temperatura
         ClimaDoDia maior = new ClimaDoDia();
         // Temperatura inicial começa com o valor mínimo de um inteiro
@@ -133,7 +132,7 @@ public class MesInfo {
     }
     
     // Método que retorna o dia com menor temperatura
-    public String getMenorTemperatura(ArrayList<ClimaDoDia> mes) {
+    private String getMenorTemperatura(ArrayList<ClimaDoDia> mes) {
         // Objeto para armarezar o dia com menor temperatura
         ClimaDoDia menor = new ClimaDoDia();
         // Temperatura inicial começa com o valor máximo de um inteiro
@@ -150,7 +149,7 @@ public class MesInfo {
     }
     
     // Método que retorna o mês do arquivo
-    public String getMesArquivo(ArrayList<ClimaDoDia> mes) {
+    private String getMesArquivo(ArrayList<ClimaDoDia> mes) {
         // Pega o primeiro dia do mês
         ClimaDoDia dia = mes.get(0);
         // Formatadorr de data

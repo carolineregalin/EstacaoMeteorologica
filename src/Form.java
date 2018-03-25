@@ -6,14 +6,17 @@
  *
 */
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.*;
 import java.nio.file.*;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class Form extends javax.swing.JFrame {
 
     public Form() {
         initComponents();
+        setDefault();
     }
 
     @SuppressWarnings("unchecked")
@@ -33,7 +36,7 @@ public class Form extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Estação Meteorológica");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setLocation(new java.awt.Point(100, 100));
+        setLocation(new java.awt.Point(0, 0));
         setMinimumSize(new java.awt.Dimension(500, 500));
         setName(""); // NOI18N
 
@@ -122,12 +125,14 @@ public class Form extends javax.swing.JFrame {
         try {
             // Pega o caminho da pasta selecionada pelo usuário
             Path caminho = new FilePathManipulator().SelecionarDiretorio();
-            // Cria um novo arquivo de texto no diretório informado pelo usuário
-            FileWriter arqRelatorio = new FileWriter(caminho.toString() + "\\Relatorio.txt");
-            // Pega o texto da área de texto do relatório e escreve no arquivo de texto
-            arqRelatorio.write(txtRelatorio.getText());
-            // Fecha o arquivo
-            arqRelatorio.close();
+            if (caminho != null) {
+                // Cria um novo arquivo de texto no diretório informado pelo usuário
+                FileWriter arqRelatorio = new FileWriter(caminho.toString() + "\\Relatorio.txt");
+                // Pega o texto da área de texto do relatório e escreve no arquivo de texto
+                arqRelatorio.write(txtRelatorio.getText());
+                // Fecha o arquivo
+                arqRelatorio.close();
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um problema ao exportar relatório: \r\n" + ex.getMessage());
         }
@@ -139,14 +144,18 @@ public class Form extends javax.swing.JFrame {
         try {
             // Pega o caminho do arquivo selecionado pelo usuário
             Path caminho = new FilePathManipulator().SelecionarArquivo();
-            // Mostra o caminho no campo de texto
-            txtCaminhoArquivo.setText(caminho.toString());
-            // Habilita os botões e campos do formulário
-            setFields(true);
+            if (caminho != null) {
+                // Mostra o caminho no campo de texto
+                txtCaminhoArquivo.setText(caminho.toString());
+                // Habilita os botões e campos do formulário
+                setFields(true);
+                // Seta o texto no campo de relatório
+                // String relatório = new MesInfo().gerarRelatorioMes(caminho);
+                txtRelatorio.setText("kkkkkkk");            
+            }
         }
-        catch (Exception e){
-            // Caso haja exceção, mostra mensagem ao usuário
-            txtCaminhoArquivo.setText(e.getMessage());
+        catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um problema: \r\n" + ex.getMessage());
         }
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
@@ -186,6 +195,8 @@ public class Form extends javax.swing.JFrame {
         lblMes.setEnabled(value);
         cmbMes.setEnabled(value);
         btnExportar.setEnabled(value);
+        txtRelatorio.setText("");
+        txtCaminhoArquivo.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -199,4 +210,10 @@ public class Form extends javax.swing.JFrame {
     private javax.swing.JTextField txtCaminhoArquivo;
     private javax.swing.JTextArea txtRelatorio;
     // End of variables declaration//GEN-END:variables
+
+    private void setDefault() {
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        this.setIconImage(new ImageIcon(getClass().getResource("\\PresentationLayer\\icone.png")).getImage());
+    }
 }
