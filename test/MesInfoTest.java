@@ -18,7 +18,7 @@ public class MesInfoTest {
     public void testGerarRelatorioMesComCaminhoNulo() throws Exception {
         String result = new MesInfo().gerarRelatorioMes(null);
     }
-
+    
     @Test(expected = IllegalArgumentException.class)
     public void testConcatenarRelatorioMes() throws Exception {
         String result = new MesInfo().gerarRelatorioMes(null);

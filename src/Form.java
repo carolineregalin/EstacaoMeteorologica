@@ -4,7 +4,7 @@
  * - Caroline Belli Regalin
  * - Matheus Mahnke
  *
-*/
+ */
 
 import java.awt.*;
 import java.io.*;
@@ -13,6 +13,11 @@ import java.util.*;
 import javax.swing.*;
 
 public class Form extends javax.swing.JFrame {
+
+    // Todos os meses do arquivo
+    ArrayList<Path> meses;
+    // Mês atual que se está trabalhando
+    ArrayList<ClimaDoDia> mes;
 
     public Form() {
         initComponents();
@@ -57,6 +62,11 @@ public class Form extends javax.swing.JFrame {
 
         cmbMes.setEnabled(false);
         cmbMes.setFocusCycleRoot(true);
+        cmbMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMesActionPerformed(evt);
+            }
+        });
 
         txtRelatorio.setColumns(20);
         txtRelatorio.setRows(5);
@@ -127,7 +137,7 @@ public class Form extends javax.swing.JFrame {
             Path caminho = new FilePathManipulator().SelecionarDiretorio();
             if (caminho != null) {
                 // Cria um novo arquivo de texto no diretório informado pelo usuário
-                FileWriter arqRelatorio = new FileWriter(caminho.toString() + "\\Relatorio.txt");
+                FileWriter arqRelatorio = new FileWriter(caminho.toString() + "\\Relatorio-" + mes.get(0).getMesFormatado() + mes.get(0).getAno() + ".txt");
                 // Pega o texto da área de texto do relatório e escreve no arquivo de texto
                 arqRelatorio.write(txtRelatorio.getText());
                 // Fecha o arquivo
@@ -152,27 +162,43 @@ public class Form extends javax.swing.JFrame {
                 // Converte para um ArrayList os itens do binário, sem separar por mês
                 ArrayList<ClimaDoDia> dias = new Leitor().Converte(caminho);
                 // Do array, faz as verificações
-                // TODO: Por algum motivo ele não ta verificando os dias repetidos nem a ordem cronológica
-                ArrayList<Object> meses = new Organizer().separarMeses(dias);
-                
-                // TODO: A ideia era retornar um array com todos os meses que ele achou no array 'dias'
-                //       e mostrar esses meses na combobox, ai o usuário selecionava o mes que ele queria
-                //       e mostrava os dados desse mês
-                // for (Object obj : meses) {
-                //     cmbMes.addItem(obj.toString());
-                // }
-                // TODO: Pega o mês selecionado na combobox e converte pra array de clima do dia
-                // String relatorio = new MesInfo().gerarRelatorioMes((ArrayList<ClimaDoDia>)meses.get(0));
-                
-                // Seta o texto no campo de relatório
-                // txtRelatorio.setText(relatorio);            
+                meses = new Organizer().separarMeses(dias);
+
+                if (!meses.isEmpty()) {
+                    // Retorna array com paths dos arquivo e gera a combo
+                    for (Object obj : meses) {
+                        cmbMes.addItem(obj.toString());
+                    }
+                    // Pega o primeiro mes como padrão para setar na cambobox
+                    mes = new MesInfo().carregarMes(meses.get(0));
+
+                    String relatorio = new MesInfo().gerarRelatorioMes(mes);
+
+                    // Seta o texto no campo de relatório
+                    txtRelatorio.setText(relatorio);
+                }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             setFields(false);
             JOptionPane.showMessageDialog(null, "Ocorreu um problema: \r\n" + ex.getMessage());
         }
     }//GEN-LAST:event_btnSelecionarActionPerformed
+
+    private void cmbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMesActionPerformed
+        try {
+            if (!meses.isEmpty()) {
+                // Pega o mês selecionado na combobox e converte pra array de clima do dia
+                mes = new MesInfo().carregarMes(meses.get(cmbMes.getSelectedIndex()));
+                if (!mes.isEmpty()) {
+                    String relatorio = new MesInfo().gerarRelatorioMes(mes);
+                    // Seta o texto no campo de relatório
+                    txtRelatorio.setText(relatorio);
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um problema: \r\n" + ex.getMessage());
+        }
+    }//GEN-LAST:event_cmbMesActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -205,17 +231,6 @@ public class Form extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void setFields(boolean value) {
-        if (!value) {
-            cmbMes.removeAllItems();
-            txtRelatorio.setText("");
-            txtCaminhoArquivo.setText("");
-        }
-        lblMes.setEnabled(value);
-        cmbMes.setEnabled(value);
-        btnExportar.setEnabled(value);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExportar;
@@ -229,9 +244,22 @@ public class Form extends javax.swing.JFrame {
     private javax.swing.JTextArea txtRelatorio;
     // End of variables declaration//GEN-END:variables
 
+    // Define a definição padrão do formulário
     private void setDefault() {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         this.setIconImage(new ImageIcon(getClass().getResource("\\PresentationLayer\\icone.png")).getImage());
+    }
+    
+    // Define o comportamento dos campos do formulário
+    private void setFields(boolean value) {
+        if (!value) {
+            cmbMes.removeAllItems();
+            txtRelatorio.setText("");
+            txtCaminhoArquivo.setText("");
+        }
+        lblMes.setEnabled(value);
+        cmbMes.setEnabled(value);
+        btnExportar.setEnabled(value);
     }
 }

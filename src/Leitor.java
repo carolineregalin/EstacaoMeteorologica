@@ -6,13 +6,11 @@
  *
 */
 
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,7 +66,7 @@ public class Leitor {
         index ++;
         SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy");
         Date data = new Date();
-        data = sf.parse(v1+"/"+v2+"/"+v3);
+        data = sf.parse(v1 + "/" + v2 + "/" + v3);
         return data;
     }
 

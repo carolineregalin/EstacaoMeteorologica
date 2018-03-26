@@ -18,14 +18,14 @@ public class MesInfo {
         if (mes == null) {
             throw new IllegalArgumentException("Arquivo não pode ser nulo!");
         }
-        return "Mês:" + getMesArquivo(mes) + " \n\r"
-             + "Quantidade de dias considerados: " + getQuantidadeDiasMes(mes) + " \n\r"
-             + "Acumulado de chuva: " + getAcumuladoChuva(mes) + " \n\r"
-             + "Velocidade média do vento: " + getVelocidadeMediaVento(mes) + " \n\r"
-             + "Maior velocidade do vento: " + getMaiorVelocidadeVento(mes) + " \n\r"
-             + "Menor velocidade do vento: " + getMenorVelocidadeVento(mes) + " \n\r"
-             + "Temperatura média: " + getTemperaturaMedia(mes) + " \n\r"
-             + "Maior temperatura: " + getMaiorTemperatura(mes) + " \n\r"
+        return "Mês: " + getMesArquivo(mes) + " \r\n"
+             + "Quantidade de dias considerados: " + getQuantidadeDiasMes(mes) + " \r\n"
+             + "Acumulado de chuva: " + getAcumuladoChuva(mes) + " \r\n"
+             + "Velocidade média do vento: " + getVelocidadeMediaVento(mes) + " \r\n"
+             + "Maior velocidade do vento: " + getMaiorVelocidadeVento(mes) + " \r\n"
+             + "Menor velocidade do vento: " + getMenorVelocidadeVento(mes) + " \r\n"
+             + "Temperatura média: " + getTemperaturaMedia(mes) + " \r\n"
+             + "Maior temperatura: " + getMaiorTemperatura(mes) + " \r\n"
              + "Menor temperatura: " + getMenorTemperatura(mes);
     }
 
@@ -70,7 +70,7 @@ public class MesInfo {
             // Soma a velocidade de cada um
             cont += dia.getVentoVelocidade();
         }
-        return (cont / getQuantidadeDiasMes(mes)) + " km/h";
+        return nf.format(cont / getQuantidadeDiasMes(mes)) + " km/h";
     }
 
     // Método que retorna o dia com maior velocidade de vento
@@ -87,7 +87,7 @@ public class MesInfo {
                 maior = dia;
             }
         }
-        return maior.getVentoVelocidade() + " km/h em " + maior.getData() + " na direção " + maior.getVentoDirecao();
+        return maior.getVentoVelocidade() + " km/h em " + maior.getDataFormatada()+ " na direção " + maior.getVentoDirecao();
     }
 
     // Método que retorna o dia com menor velocidade de vento
@@ -104,7 +104,7 @@ public class MesInfo {
                 menor = dia;
             }
         }
-        return menor.getVentoVelocidade() + " km/h em " + menor.getData() + " na direção " + menor.getVentoDirecao();
+        return menor.getVentoVelocidade() + " km/h em " + menor.getDataFormatada() + " na direção " + menor.getVentoDirecao();
     }
 
     // Método que retorna a temperatura média daquele mês
@@ -115,7 +115,8 @@ public class MesInfo {
             // Soma a temperatura de cada um
             acumulado += dia.getTemperatura();
         }
-        return (acumulado / getQuantidadeDiasMes(mes)) + " ºC";
+
+        return nf.format(acumulado / getQuantidadeDiasMes(mes)) + " ºC";
     }
 
     // Método que retorna o dia com maior temperatura
@@ -132,7 +133,7 @@ public class MesInfo {
                 maior = dia;
             }
         }
-        return maior.getTemperatura() + " ºC em " + maior.getData();
+        return maior.getTemperatura() + " ºC em " + maior.getDataFormatada();
     }
     
     // Método que retorna o dia com menor temperatura
@@ -149,7 +150,7 @@ public class MesInfo {
                 menor = dia;
             }
         }
-        return menor.getTemperatura() + " ºC em " + menor.getData();
+        return menor.getTemperatura() + " ºC em " + menor.getDataFormatada();
     }
     
     // Método que retorna o mês do arquivo
@@ -157,6 +158,9 @@ public class MesInfo {
         // Pega o primeiro dia do mês
         ClimaDoDia dia = mes.get(0);
         // Retorna o mês/ano
-        return dia.getMes() + "/" + dia.getAno();
+        return dia.getMesFormatado() + "/" + dia.getAno();
     }
+    
+    // Formatador de número em divisão
+    NumberFormat nf = new DecimalFormat ("#,##0.00", new DecimalFormatSymbols (new Locale ("pt", "BR")));
 }

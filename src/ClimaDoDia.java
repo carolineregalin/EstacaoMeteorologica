@@ -36,7 +36,7 @@ public class ClimaDoDia implements Serializable {
         return this.data;
     }
     public String getDataFormatada() {
-        return new SimpleDateFormat("dd/MM//yyyy").format(data);
+        return new SimpleDateFormat("dd/MM/yyyy").format(data);
     }
     public String getDia(){
         return new SimpleDateFormat("dd").format(data);
@@ -44,6 +44,9 @@ public class ClimaDoDia implements Serializable {
     public String getMes(){
         return new SimpleDateFormat("MM").format(data);
     } 
+    public String getMesFormatado() {
+        return new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(this.getData());
+    }
     public String getAno(){
         return new SimpleDateFormat("yyyy").format(data);
     }
