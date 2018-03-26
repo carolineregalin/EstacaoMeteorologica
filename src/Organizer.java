@@ -51,11 +51,11 @@ public class Organizer {
                 ClimaDoDia diaAnterior = mes.get(i-1);
                 // Se a data do objeto atual for depois da data do próximo objeto
                 if (diaAnterior.getData().after(atual.getData())) {
-                    throw new IllegalArgumentException("O dia " + atual.getData() + " foi encontrado depois do dia " + diaAnterior.getData() + ".");
+                    throw new IllegalArgumentException("O dia " + atual.getDataFormatada()+ " foi encontrado depois do dia " + diaAnterior.getDataFormatada()+ ".");
                 }
                 
                 if (diaAnterior.getData().equals(atual.getData())) {
-                    throw new IllegalArgumentException("O dia " + diaAnterior.getData() + " está repetido.");
+                    throw new IllegalArgumentException("O dia " + diaAnterior.getDataFormatada()+ " está repetido.");
               }
             }
         }
