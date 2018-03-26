@@ -6,10 +6,10 @@
  *
 */
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.io.*;
 import java.nio.file.*;
+import java.util.*;
 import javax.swing.*;
 
 public class Form extends javax.swing.JFrame {
@@ -149,12 +149,27 @@ public class Form extends javax.swing.JFrame {
                 txtCaminhoArquivo.setText(caminho.toString());
                 // Habilita os botões e campos do formulário
                 setFields(true);
+                // Converte para um ArrayList os itens do binário, sem separar por mês
+                ArrayList<ClimaDoDia> dias = new Leitor().Converte(caminho);
+                // Do array, faz as verificações
+                // TODO: Por algum motivo ele não ta verificando os dias repetidos nem a ordem cronológica
+                ArrayList<Object> meses = new Organizer().separarMeses(dias);
+                
+                // TODO: A ideia era retornar um array com todos os meses que ele achou no array 'dias'
+                //       e mostrar esses meses na combobox, ai o usuário selecionava o mes que ele queria
+                //       e mostrava os dados desse mês
+                // for (Object obj : meses) {
+                //     cmbMes.addItem(obj.toString());
+                // }
+                // TODO: Pega o mês selecionado na combobox e converte pra array de clima do dia
+                // String relatorio = new MesInfo().gerarRelatorioMes((ArrayList<ClimaDoDia>)meses.get(0));
+                
                 // Seta o texto no campo de relatório
-                // String relatório = new MesInfo().gerarRelatorioMes(caminho);
-                txtRelatorio.setText("kkkkkkk");            
+                // txtRelatorio.setText(relatorio);            
             }
         }
         catch (Exception ex) {
+            setFields(false);
             JOptionPane.showMessageDialog(null, "Ocorreu um problema: \r\n" + ex.getMessage());
         }
     }//GEN-LAST:event_btnSelecionarActionPerformed
@@ -192,11 +207,14 @@ public class Form extends javax.swing.JFrame {
     }
     
     private void setFields(boolean value) {
+        if (!value) {
+            cmbMes.removeAllItems();
+            txtRelatorio.setText("");
+            txtCaminhoArquivo.setText("");
+        }
         lblMes.setEnabled(value);
         cmbMes.setEnabled(value);
         btnExportar.setEnabled(value);
-        txtRelatorio.setText("");
-        txtCaminhoArquivo.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

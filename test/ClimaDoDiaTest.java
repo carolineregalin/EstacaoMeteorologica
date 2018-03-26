@@ -24,39 +24,6 @@ public class ClimaDoDiaTest {
         instance = new ClimaDoDia(new Date(), "SE", 10, 10, 10);
     }
     
-    /*
-    @Test
-    public void testGetData() {
-        Date result = instance.getData();
-        
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    public void testGetDia() {
-        String expResult = "";
-        String result = instance.getDia();
-        
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    public void testGetMes() {
-        String expResult = "";
-        String result = instance.getMes();
-        
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    public void testGetAno() {
-        String expResult = "";
-        String result = instance.getAno();
-    
-        assertEquals(expResult, result);
-    }
-    */
-
     @Test
     public void testSetData() {
         instance.setData(new Date());
@@ -72,11 +39,6 @@ public class ClimaDoDiaTest {
     @Test
     public void testSetVentoDirecaoValorValido() {
         instance.setVentoDirecao("SE");
-    }
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void testSetVentoDirecaoValorInvalido1() {
-        instance.setVentoDirecao("DE");
     }
 
     @Test(expected = IllegalArgumentException.class)

@@ -11,9 +11,12 @@ import java.nio.file.*;
 import java.util.*;
 
 public class Organizer {
-
+    
     // Método que separar por mes e gera os arquivos
-    public void separarMeses(ArrayList<ClimaDoDia> meses) throws IOException {
+    public ArrayList<Object> separarMeses(ArrayList<ClimaDoDia> meses) throws IOException {
+        // TODO: fazer uma forma de salvar os meses que ele acha e retornar ele
+        //       junto com seu arraylist de ClimaDoDia
+        ArrayList<Object> totalMeses = new ArrayList<Object>();
         // Percorre todos os meses do ano
         for (int i = 1; i <= 12; i++) {
             // Cria um novo Arraylist de ClimaDoDia
@@ -30,8 +33,10 @@ public class Organizer {
             if(!mes.isEmpty()) {
                 // Cria o arquivo com o arraylist com os dias do mes
                 validarMes(mes);
+                totalMeses.add(mes);
             }
         }
+        return totalMeses;
     }
 
     // Método que valida o mês separado
@@ -43,7 +48,7 @@ public class Organizer {
                 // Se o index dos dois For não for o mesmo (ou seja, itens diferentes)
                 // e a data deles for a mesma
                 if (i != j && mes.get(i).getData().equals(mes.get(j).getData())) {
-                    throw new IllegalArgumentException("O dia " + mes.get(i).getDataFormatada() + " está repetido.");
+                    throw new IllegalArgumentException("O dia " + mes.get(i).getData() + " está repetido.");
                 }
             }
             // Objeto com o dia atual
@@ -54,7 +59,7 @@ public class Organizer {
                 ClimaDoDia proximoDia = mes.get(++i);
                 // Se a data do objeto atual for depois da data do próximo objeto
                 if (atual.getData().after(proximoDia.getData())) {
-                    throw new IllegalArgumentException("O dia " + atual.getDataFormatada()+ " foi encontrado depois do dia " + proximoDia.getDataFormatada() + ".");
+                    throw new IllegalArgumentException("O dia " + atual.getData()+ " foi encontrado depois do dia " + proximoDia.getData() + ".");
                 }
             }
         }

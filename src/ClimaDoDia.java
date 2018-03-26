@@ -61,11 +61,7 @@ public class ClimaDoDia implements Serializable {
     public void setVentoDirecao(String value) {
         if (value == null || value.trim().length() < 1) {
             throw new IllegalArgumentException("Direção do vento não pode ser nulo!");
-        } else if (value.trim() != "N" && value.trim() != "NE" && value.trim() != "NW" &&
-                   value.trim() != "S" && value.trim() != "SE" && value.trim() != "SW" &&
-                   value.trim() != "E" && value.trim() != "W") {
-            throw new IllegalArgumentException("Direção do vento inválida.!");
-        }
+        } 
         this.ventoDirecao = value;
     }
 

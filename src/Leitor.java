@@ -1,3 +1,10 @@
+/* 
+ *
+ * - Alan Felipe Jantz 
+ * - Caroline Belli Regalin
+ * - Matheus Mahnke
+ *
+*/
 
 import java.io.File;
 import java.io.IOException;
@@ -11,42 +18,36 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author Matheus PC
- */
 public class Leitor {
 
+    // Vetor de bytes para armazenar o arquivo de bytes
     private byte[] bytes;
+    // Index para saber a posição no arquivo para ler
     private int index;
-    //Coverte o arquivo binário em um vetor de bytes (bytes)
-    //Chama métodos que irão converter determinado tipo de dado,
-    //a partir do index, e sempre que for lido um byte, o index é incrementado
-    //para que a próxima leitura não seja "releitura".
-    //Quando index tiver tamanho do vetor, indica fim, e será retornado ArrayList<ClimaDoDia>
+    
+    // Coverte o arquivo binário em um vetor de bytes (bytes)
+    // Chama métodos que irão converter determinado tipo de dado,
+    // A partir do index, e sempre que for lido um byte, o index é incrementado
+    // Para que a próxima leitura não seja "releitura".
+    // Quando index tiver tamanho do vetor, indica fim, e será retornado ArrayList<ClimaDoDia>
     public ArrayList<ClimaDoDia> Converte(Path a) throws IOException, ParseException, Exception {
         bytes = Files.readAllBytes(a);
         index = 0;
-        ArrayList<ClimaDoDia> climaDoDia = new ArrayList<ClimaDoDia>();
+        ArrayList<ClimaDoDia> dias = new ArrayList<ClimaDoDia>();
             while (index < bytes.length) {
             try {
-                ClimaDoDia classe = new ClimaDoDia();
-                classe.setData(data());
-                classe.setVentoDirecao(caracter());
-                classe.setVentoVelocidade(inteiro());
-                classe.setIndicePluviometrico(inteiro());
-                classe.setTemperatura(quebrado());
-                climaDoDia.add(classe);
+                ClimaDoDia dia = new ClimaDoDia();
+                dia.setData(data());
+                dia.setVentoDirecao(caracter());
+                dia.setVentoVelocidade(inteiro());
+                dia.setIndicePluviometrico(inteiro());
+                dia.setTemperatura(quebrado());
+                dias.add(dia);
             } catch (Exception e) {
-                throw new Exception("");
+                throw new Exception(e.getMessage());
             }
         }
-        return climaDoDia;
+        return dias;
     }
 
     public Date data() throws ParseException {
