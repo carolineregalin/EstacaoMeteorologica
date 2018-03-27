@@ -10,6 +10,8 @@ import java.awt.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 public class Form extends javax.swing.JFrame {
@@ -185,19 +187,18 @@ public class Form extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void cmbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMesActionPerformed
-        try {
             if (!meses.isEmpty()) {
-                // Pega o mês selecionado na combobox e converte pra array de clima do dia
-                mes = new MesInfo().carregarMes(meses.get(cmbMes.getSelectedIndex()));
+                try {
+                    // Pega o mês selecionado na combobox e converte pra array de clima do dia
+                    mes = new MesInfo().carregarMes(meses.get(cmbMes.getSelectedIndex()));
+                } catch (Exception ex) {
+                }
                 if (!mes.isEmpty()) {
                     String relatorio = new MesInfo().gerarRelatorioMes(mes);
                     // Seta o texto no campo de relatório
                     txtRelatorio.setText(relatorio);
                 }
             }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um problema: \r\n" + ex.getMessage());
-        }
     }//GEN-LAST:event_cmbMesActionPerformed
 
     public static void main(String args[]) {
@@ -254,9 +255,11 @@ public class Form extends javax.swing.JFrame {
     // Define o comportamento dos campos do formulário
     private void setFields(boolean value) {
         if (!value) {
-            cmbMes.removeAllItems();
             txtRelatorio.setText("");
             txtCaminhoArquivo.setText("");
+        }
+        else {
+            cmbMes.removeAllItems();
         }
         lblMes.setEnabled(value);
         cmbMes.setEnabled(value);

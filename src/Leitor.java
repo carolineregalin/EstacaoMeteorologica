@@ -42,7 +42,7 @@ public class Leitor {
                 dia.setTemperatura(quebrado());
                 dias.add(dia);
             } catch (Exception e) {
-                throw new Exception(e.getMessage());
+                throw new Exception("Valores do arquivo incorretos, verifique!");
             }
         }
         return dias;
